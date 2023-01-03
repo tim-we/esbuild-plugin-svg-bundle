@@ -72,7 +72,7 @@ const svgBundlePlugin: PluginFactory = ({ bundleFile, bundleUrl, hash }) => {
         const spriter = new SVGSpriter({
           dest: options.outdir,
           shape: {
-            transform: (options.minify ?? true) ? ["svgo"] : []
+            transform: options.minify ?? true ? ["svgo"] : [],
           },
           svg: {
             doctypeDeclaration: false,
