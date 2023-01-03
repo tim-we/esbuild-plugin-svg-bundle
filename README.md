@@ -24,7 +24,7 @@ esbuild.build({
         bundleUrl: "../assets/svg-bundle.svg"
       })
     ]
-})
+});
 ```
 
 This will create `dist/assets/svg-bundle.svg` and references in CSS will get remapped from
