@@ -31,7 +31,7 @@ jobs:
         run: npm run format:check
 
       - name: Build
-        run: npm run build:production
+        run: npm pack
 
       - name: Upload files
         uses: actions/upload-artifact@v3.1.1
