@@ -68,8 +68,12 @@ const svgBundlePlugin: PluginFactory = ({ bundleFile, bundleUrl, hash }) => {
           return;
         }
 
+        // TODO: remove class attriutes from <view> tags in output
         const spriter = new SVGSpriter({
           dest: options.outdir,
+          shape: {
+            transform: (options.minify ?? true) ? ["svgo"] : []
+          },
           svg: {
             doctypeDeclaration: false,
           },
