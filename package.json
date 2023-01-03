@@ -1,6 +1,6 @@
 {
   "name": "esbuild-plugin-svg-bundle",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Bundle SVG imports into a single SVG file.",
   "main": "dist/bundle-svg.mjs",
   "files": [
@@ -23,6 +23,10 @@
     "svg-sprite",
     "spritesheet"
   ],
+  "repository": "github:tim-we/esbuild-plugin-svg-bundle",
+  "bugs": {
+    "url": "https://github.com/tim-we/esbuild-plugin-svg-bundle/issues"
+  },
   "devDependencies": {
     "@types/node": "^18.11.18",
     "@types/svg-sprite": "^0.0.34",
