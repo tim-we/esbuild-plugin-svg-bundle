@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions: {} # disable all
+
+jobs:
+  build:
+    name: Build+Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3.2.0
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.5.1
+        with:
+          node-version-file: package.json
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: NPM install
+        run: npm ci
+
+      - name: Check format
+        run: npm run format:check
+
+      - name: Build
+        run: npm run build:production
+
+      - name: Upload files
+        uses: actions/upload-artifact@v3.1.1
+        with:
+          name: npm-package
+          path: "*.tgz"
+          retention-days: ${{ (github.ref == 'refs/heads/main') && 90 || 1 }} # 90 days on main branch, 1 for PRs

@@ -10,8 +10,8 @@
   "scripts": {
     "build": "tsc",
     "prepack": "npm run build",
-    "format": "prettier --write src/**/* package.json tsconfig.json",
-    "format:check": "prettier --check src/**/* package.json tsconfig.json"
+    "format": "prettier --write src/* .github/* package.json tsconfig.json",
+    "format:check": "prettier --check src/* .github/* package.json tsconfig.json"
   },
   "author": "Tim Weißenfels",
   "license": "MIT",
@@ -36,5 +36,9 @@
   },
   "dependencies": {
     "svg-sprite": "^2.0.2"
+  },
+  "engines": {
+    "node": "~18",
+    "npm": "~8"
   }
 }
