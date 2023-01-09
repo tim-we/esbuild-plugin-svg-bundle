@@ -1,5 +1,8 @@
 ### esbuild-plugin-svg-bundle
 
+[![npm](https://img.shields.io/npm/v/esbuild-plugin-svg-bundle)](https://www.npmjs.com/package/esbuild-plugin-svg-bundle)
+[![CI](https://github.com/tim-we/esbuild-plugin-svg-bundle/actions/workflows/build.yml/badge.svg)](https://github.com/tim-we/esbuild-plugin-svg-bundle/actions/workflows/build.yml)
+
 This is a plugin for `esbuild` that bundles all SVG files referenced in CSS files into a single SVG bundle consisting nested SVGs accessible via fragment ids.
 
 ## Install
