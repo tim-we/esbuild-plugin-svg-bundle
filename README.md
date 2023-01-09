@@ -8,7 +8,7 @@ This is a plugin for `esbuild` that bundles all SVG files referenced in CSS file
 
 ## Install
 
-```js
+```sh
 npm i -D esbuild-plugin-svg-bundle
 ```
 
