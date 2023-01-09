@@ -44,7 +44,7 @@ export default function packAndRender(
     data.svg.attribs = {
       ...data.svg.attribs,
       x: "" + x,
-      y: "" + y
+      y: "" + y,
     };
 
     // Render SVG string
