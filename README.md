@@ -1,6 +1,6 @@
 ### esbuild-plugin-svg-bundle
 
-This is a plugin for `esbuild` that bundles all SVG files referenced in CSS files into a single SVG bundle. It uses `svg-sprite` to bundle SVG files.
+This is a plugin for `esbuild` that bundles all SVG files referenced in CSS files into a single SVG bundle consisting nested SVGs accessible via fragment ids.
 
 ## Install
 
@@ -50,3 +50,4 @@ using the specified `bundleUrl` to
 | bundleFile | required | string | - | Coming soon™ |
 | bundleUrl | required | string | - | Coming soon™ |
 | hash | optional | string | `undefined` | Coming soon™ |
+| gap | optional | number | `1` | Gap between packed images. |
