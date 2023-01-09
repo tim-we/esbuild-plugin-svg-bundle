@@ -1,13 +1,19 @@
 import path from "node:path";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
-import SVGSpriter from "svg-sprite";
 
 import type { BuildOptions, Plugin, PluginBuild } from "esbuild";
+import extractSVG, { ExtractedSVG } from "./extract.mjs";
+import packAndRender from "./pack.mjs";
 
 // path gets shadowed in onResolve
 const getBasename = path.basename;
 
-const svgBundlePlugin: PluginFactory = ({ bundleFile, bundleUrl, hash }) => {
+const svgBundlePlugin: PluginFactory = ({
+  bundleFile,
+  bundleUrl,
+  hash,
+  gap,
+}) => {
   if (bundleFile === undefined || bundleUrl === undefined) {
     throw new Error("[SVG Bundle Plugin] Required options missing.");
   }
@@ -16,7 +22,7 @@ const svgBundlePlugin: PluginFactory = ({ bundleFile, bundleUrl, hash }) => {
     name: "SVG Bundle Plugin",
     setup(build: PluginBuild) {
       const options = build.initialOptions as Readonly<BuildOptions>;
-      const outputFile = path.join(options.outdir, bundleFile);
+      const outputFile = path.join(options.outdir ?? ".", bundleFile);
       const svgFileToId = new Map<string, string>();
       const svgIds = new Set<string>();
 
@@ -68,21 +74,8 @@ const svgBundlePlugin: PluginFactory = ({ bundleFile, bundleUrl, hash }) => {
           return;
         }
 
-        // TODO: remove class attriutes from <view> tags in output
-        const spriter = new SVGSpriter({
-          dest: options.outdir,
-          shape: {
-            transform: options.minify ?? true ? ["svgo"] : [],
-          },
-          svg: {
-            doctypeDeclaration: false,
-          },
-          mode: {
-            view: {
-              bust: false,
-            },
-          },
-        });
+        // TODO: run svgo when options.minify is true
+        const parsedSVGs: ExtractedSVG[] = [];
 
         const metafileInputs: Record<string, MetafileOutputInput> =
           Object.fromEntries(
@@ -91,13 +84,19 @@ const svgBundlePlugin: PluginFactory = ({ bundleFile, bundleUrl, hash }) => {
                 async ([resolvedPath, svgId]) => {
                   // Load SVG file.
                   const svgData = await readFile(resolvedPath);
-                  spriter.add("svg/" + svgId, svgId, svgData.toString("utf-8"));
+
+                  // Parse & extract.
+                  const result = await extractSVG(
+                    svgId,
+                    svgData.toString("utf-8")
+                  );
+                  parsedSVGs.push(result);
 
                   // Create metafile data.
                   return [
                     path.relative(".", resolvedPath),
                     {
-                      bytesInOutput: svgData.length,
+                      bytesInOutput: svgData.length, // TODO
                     } as MetafileOutputInput,
                   ];
                 }
@@ -105,23 +104,20 @@ const svgBundlePlugin: PluginFactory = ({ bundleFile, bundleUrl, hash }) => {
             )
           );
 
-        const { result } = await spriter.compileAsync();
-
-        const outputFileBuffer = result.view.sprite.contents as Buffer;
+        const svgOutput = packAndRender(parsedSVGs, gap ?? 1);
 
         // Create the svg bundle file.
         await mkdir(path.dirname(outputFile), { recursive: true });
-        await writeFile(outputFile, outputFileBuffer);
+        await writeFile(outputFile, svgOutput, "utf-8");
 
         if (esbuildResult.metafile) {
           const relativePath = path.relative(".", outputFile);
 
           // We are currently using the input file size for the bytesInOutput property,
-          // which is only a rough approximation but IMO sufficient for most applications.
-          // TODO: check if svg-sprite returns any info about this
+          // which is only a rough approximation but probably sufficient for most applications.
 
           esbuildResult.metafile.outputs[relativePath] = {
-            bytes: outputFileBuffer.length,
+            bytes: svgOutput.length,
             inputs: metafileInputs,
             imports: [],
             exports: [],
@@ -157,6 +153,7 @@ type PluginFactory = (options: {
   bundleFile: string;
   bundleUrl: string;
   hash?: string;
+  gap?: number;
 }) => Plugin;
 
 type MetafileOutputInput = { bytesInOutput: number };
