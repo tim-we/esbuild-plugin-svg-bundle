@@ -16,7 +16,7 @@ const svgBundlePlugin: PluginFactory = ({ bundleFile, bundleUrl, hash }) => {
     name: "SVG Bundle Plugin",
     setup(build: PluginBuild) {
       const options = build.initialOptions as Readonly<BuildOptions>;
-      const outputFile = path.join(options.outdir, bundleFile);
+      const outputFile = path.join(options.outdir ?? ".", bundleFile);
       const svgFileToId = new Map<string, string>();
       const svgIds = new Set<string>();
 
