@@ -1,12 +1,30 @@
 import path from "node:path";
 import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { Buffer } from "node:buffer";
+import { optimize } from "svgo";
 
 import type { BuildOptions, Plugin, PluginBuild } from "esbuild";
+import type { Config as SVGOConfig } from "svgo";
+
 import extractSVG, { ExtractedSVG } from "./extract.mjs";
 import packAndRender from "./pack.mjs";
 
 // path gets shadowed in onResolve
 const getBasename = path.basename;
+
+const svgoConfig: SVGOConfig = {
+  multipass: true,
+  plugins: [
+    {
+      name: "preset-default",
+      params: {
+        overrides: {
+          removeViewBox: false,
+        },
+      },
+    },
+  ],
+};
 
 const svgBundlePlugin: PluginFactory = ({
   bundleFile,
@@ -74,8 +92,7 @@ const svgBundlePlugin: PluginFactory = ({
           return;
         }
 
-        // TODO: run svgo when options.minify is true
-        const parsedSVGs: ExtractedSVG[] = [];
+        const collectedSVGs: ExtractedSVG[] = [];
 
         const metafileInputs: Record<string, MetafileOutputInput> =
           Object.fromEntries(
@@ -85,18 +102,20 @@ const svgBundlePlugin: PluginFactory = ({
                   // Load SVG file.
                   const svgData = await readFile(resolvedPath);
 
+                  // Optimize with svgo when minify is enabled.
+                  const svgString = options.minify
+                    ? optimize(svgData.toString("utf-8"), svgoConfig).data
+                    : svgData.toString("utf-8");
+
                   // Parse & extract.
-                  const result = await extractSVG(
-                    svgId,
-                    svgData.toString("utf-8")
-                  );
-                  parsedSVGs.push(result);
+                  const result = await extractSVG(svgId, svgString);
+                  collectedSVGs.push(result);
 
                   // Create metafile data.
                   return [
                     path.relative(".", resolvedPath),
                     {
-                      bytesInOutput: svgData.length, // TODO
+                      bytesInOutput: Buffer.byteLength(svgString, "utf-8"),
                     } as MetafileOutputInput,
                   ];
                 }
@@ -104,7 +123,7 @@ const svgBundlePlugin: PluginFactory = ({
             )
           );
 
-        const svgOutput = packAndRender(parsedSVGs, gap ?? 1);
+        const svgOutput = packAndRender(collectedSVGs, gap ?? 1);
 
         // Create the svg bundle file.
         await mkdir(path.dirname(outputFile), { recursive: true });
