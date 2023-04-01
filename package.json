@@ -34,7 +34,7 @@
     "esbuild": "^0.17.5",
     "prettier": "^2.8.1",
     "rimraf": "^4.1.2",
-    "typescript": "^4.9.4"
+    "typescript": "^5.0.3"
   },
   "dependencies": {
     "dom-serializer": "^2.0.0",
