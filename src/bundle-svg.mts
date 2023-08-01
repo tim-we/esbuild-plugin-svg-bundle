@@ -84,7 +84,7 @@ const svgBundlePlugin: PluginFactory = ({
             sideEffects: false,
             watchFiles: [result.path],
           };
-        }
+        },
       );
 
       build.onEnd(async (esbuildResult) => {
@@ -118,9 +118,9 @@ const svgBundlePlugin: PluginFactory = ({
                       bytesInOutput: Buffer.byteLength(svgString, "utf-8"),
                     } as MetafileOutputInput,
                   ];
-                }
-              )
-            )
+                },
+              ),
+            ),
           );
 
         const svgOutput = packAndRender(collectedSVGs, gap ?? 1);
