@@ -3,7 +3,7 @@ import render from "dom-serializer";
 
 export default function packAndRender(
   svgs: ExtractedSVG[],
-  gap: number,
+  gap: number
 ): string {
   const elementsPerRow = Math.max(1, Math.round(Math.sqrt(svgs.length)));
   const positions = new Map<ExtractedSVG, { x: number; y: number }>();
@@ -32,7 +32,7 @@ export default function packAndRender(
   const packedSVGHeight =
     currentX === 0 ? currentY - gap : currentY + maxHeightInRow;
   const packedViewBox = `0 0 ${Math.ceil(maxRowWidth)} ${Math.ceil(
-    packedSVGHeight,
+    packedSVGHeight
   )}`;
 
   let packedSVG = `<svg version="1.1" viewBox="${packedViewBox}" xmlns="http://www.w3.org/2000/svg">\n`;

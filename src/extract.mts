@@ -5,7 +5,7 @@ import type { ChildNode, Element } from "domhandler";
 
 export default async function extractSVG(
   id: string,
-  rawSVG: string,
+  rawSVG: string
 ): Promise<ExtractedSVG> {
   if (!id) {
     throw new Error("id may not be empty");
@@ -16,7 +16,7 @@ export default async function extractSVG(
   // Find root svg element. Ignore doctype & comments.
   const svg = svgDoc.find<Element>(
     (element: ChildNode): element is Element =>
-      element.type === "tag" && element.name === "svg",
+      element.type === "tag" && element.name === "svg"
   );
   if (svg === undefined) {
     throw new Error("<svg> not found.");
@@ -84,7 +84,7 @@ function parse(rawSVG: string): Promise<ChildNode[]> {
       }),
       {
         xmlMode: true, // required to preserve attribute case
-      },
+      }
     );
 
     parser.write(rawSVG);

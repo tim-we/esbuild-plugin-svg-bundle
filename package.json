@@ -11,8 +11,8 @@
     "build": "tsc",
     "clean": "rimraf dist",
     "prepack": "npm run clean && npm run build",
-    "format": "prettier --write src/* .github/* package.json tsconfig.json",
-    "format:check": "prettier --check src/* .github/* package.json tsconfig.json"
+    "format": "prettier --write --trailing-comma es5 src/* .github/* package.json tsconfig.json",
+    "format:check": "prettier --check --trailing-comma es5 src/* .github/* package.json tsconfig.json"
   },
   "author": "Tim Weißenfels",
   "license": "MIT",
