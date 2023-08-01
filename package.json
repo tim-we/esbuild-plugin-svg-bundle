@@ -11,8 +11,8 @@
     "build": "tsc",
     "clean": "rimraf dist",
     "prepack": "npm run clean && npm run build",
-    "format": "prettier --write src/* .github/* package.json tsconfig.json",
-    "format:check": "prettier --check src/* .github/* package.json tsconfig.json"
+    "format": "prettier --write --trailing-comma es5 src/* .github/* package.json tsconfig.json",
+    "format:check": "prettier --check --trailing-comma es5 src/* .github/* package.json tsconfig.json"
   },
   "author": "Tim Weißenfels",
   "license": "MIT",
@@ -32,7 +32,7 @@
     "@types/node": "^20.4.5",
     "@types/svg-sprite": "^0.0.34",
     "esbuild": "^0.18.17",
-    "prettier": "^2.8.8",
+    "prettier": "^3.0.0",
     "rimraf": "^5.0.1",
     "typescript": "^5.1.6"
   },
