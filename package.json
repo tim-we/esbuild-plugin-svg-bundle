@@ -31,7 +31,7 @@
   "devDependencies": {
     "@types/node": "^20.8.10",
     "@types/svg-sprite": "^0.0.34",
-    "esbuild": "^0.18.17",
+    "esbuild": "^0.19.8",
     "prettier": "^3.1.0",
     "rimraf": "^5.0.5",
     "typescript": "^5.3.3"
