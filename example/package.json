@@ -1,0 +1,16 @@
+{
+  "name": "example",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Tim Weißenfels",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.19.8",
+    "esbuild-plugin-svg-bundle": "^1.3.0"
+  },
+  "scripts": {
+    "start": "node build.mjs"
+  }
+}

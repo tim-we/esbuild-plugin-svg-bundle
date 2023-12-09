@@ -47,6 +47,8 @@ using the specified `bundleUrl` to
 }
 ```
 
+For a simple example checkout the `example` directory.
+
 ## Configuration
 
 | property | required? | type | default | description |

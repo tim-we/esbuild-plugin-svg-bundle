@@ -1,0 +1,14 @@
+#box-a, #box-b {
+    background-repeat: no-repeat;
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+}
+
+#box-a {
+    background-image: url(a.svg);
+}
+
+#box-b {
+    background-image: url(b.svg);
+}
