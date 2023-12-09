@@ -4,7 +4,8 @@
   "description": "Bundle SVG imports into a single SVG file.",
   "main": "dist/bundle-svg.mjs",
   "files": [
-    "dist/*"
+    "dist/*.mjs",
+    "dist/*.d.mts"
   ],
   "types": "dist/bundle-svg.d.mts",
   "scripts": {

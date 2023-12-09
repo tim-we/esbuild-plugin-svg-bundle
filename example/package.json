@@ -1,0 +1,12 @@
+{
+  "name": "example",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Tim Weißenfels",
+  "license": "MIT",
+  "devDependencies": {
+    "esbuild": "^0.19.8"
+  }
+}
