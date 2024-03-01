@@ -32,7 +32,7 @@
   "devDependencies": {
     "@types/node": "^20.11.16",
     "@types/svg-sprite": "^0.0.38",
-    "esbuild": ">=0.20.0",
+    "esbuild": ">=0.20.1",
     "prettier": "^3.2.5",
     "rimraf": "^5.0.5",
     "typescript": "^5.3.3"
