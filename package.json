@@ -30,7 +30,7 @@
     "url": "https://github.com/tim-we/esbuild-plugin-svg-bundle/issues"
   },
   "devDependencies": {
-    "@types/node": "^20.11.16",
+    "@types/node": "^20.13.0",
     "@types/svg-sprite": "^0.0.39",
     "esbuild": ">=0.20.0",
     "prettier": "^3.2.5",
