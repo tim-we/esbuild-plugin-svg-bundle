@@ -34,7 +34,7 @@
     "@types/svg-sprite": "^0.0.39",
     "esbuild": ">=0.20.0",
     "prettier": "^3.3.2",
-    "rimraf": "^5.0.7",
+    "rimraf": "^6.0.1",
     "typescript": "^5.4.5"
   },
   "dependencies": {
